@@ -1,9 +1,18 @@
-from typing import Callable
+from typing import Callable, Optional
 
 class NoFieldError(Exception):
-    def __init__(self, message: str, code: int = 100):
-        super().__init__(message, code)
+    def __init__(
+            self, 
+            field: Optional[str], 
+            message: Optional[str] = None
+        ):
+        self.field = field
+
+        if message is None:
+            message = no_field_msg(self.field)
+            
         self.message = message
-        self.code = code
+        super().__init__(message)
         
-no_field: Callable[[str], str] = lambda field: f"The field '{field}' does not exist in the data"
+no_field_msg: Callable[[str], str] = \
+    lambda field: f"The field '{field}' does not exist in the data"

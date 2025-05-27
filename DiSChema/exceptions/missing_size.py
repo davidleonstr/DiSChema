@@ -1,9 +1,18 @@
-from typing import Callable
+from typing import Callable, Optional
 
 class MissingSizeError(Exception):
-    def __init__(self, message: str, code: int = 100):
-        super().__init__(message, code)
-        self.message = message
-        self.code = code
+    def __init__(
+            self, 
+            field: Optional[str], 
+            message: Optional[str] = None
+        ):
+        self.field = field
 
-missing_size: Callable[[str], str] = lambda field: f"The field '{field}' is below the minimum size"
+        if message is None:
+            message = missing_size_msg(self.field)
+            
+        self.message = message
+        super().__init__(message)
+
+missing_size_msg: Callable[[str], str] = \
+    lambda field: f"The field '{field}' is below the minimum size"

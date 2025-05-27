@@ -1,34 +1,52 @@
 from DiSChema import DiSchema
 
-scheme = {
-    'field_1': {
-        'type': 'str',
-        'max_length': 6
-    },
-    'field_2': {
-        'type': 'int',
-        'max_size': 5
-    },
-    'field_3': {
-        'type': 'int',
-        'min_size': 2
-    },
-    'field_4': {
-        'type': 'int',
-        'max_size': 5,
-        'min_size': 1
+scheme_nested_list = {
+    'users': {
+        'type': 'list',
+        'required': True,
+        'allowed-items': [
+            {
+                'name': {'type': 'str', 'required': True, 'min-length': 1},
+                'age': {'type': 'int', 'required': True, 'min-size': 0},
+                'address': {
+                    'type': 'dict',
+                    'required': False,
+                    'schema': {
+                        'street': {'type': 'str', 'required': True},
+                        'city': {'type': 'str', 'required': True},
+                        'coordinates': {
+                            'type': 'dict',
+                            'required': False,
+                            'schema': {
+                                'lat': {'type': 'float', 'required': True},
+                                'lng': {'type': 'float', 'required': True}
+                            }
+                        }
+                    }
+                }
+            }
+        ]
     }
 }
 
 data = {
-    'field_1': 'hello',
-    'field_2': 4,
-    'field_3': 7,
-    'field_4': 9
+    'users': [
+        {
+            'name': 'Juan',
+            'age': 90,
+            'address': {
+                'street': 'Calle 123',
+                'city': 'Madrid',
+                'coordinates': {
+                    'lat': 40.4168,
+                    'lng': -3.7038
+                }
+            }
+        }
+    ]
 }
 
-test_scheme = DiSchema(scheme)
-
-result = test_scheme.check(data)
-
-print(str(result))
+validator = DiSchema(scheme_nested_list, stop=False)
+result = validator.check(data)
+print(f"Válido: {result['valid']}")
+print(f"Errores: {result['errors']}")

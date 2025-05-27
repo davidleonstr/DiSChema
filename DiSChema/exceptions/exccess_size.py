@@ -1,9 +1,18 @@
-from typing import Callable
+from typing import Callable, Optional
 
 class ExcessSizeError(Exception):
-    def __init__(self, message: str, code: int = 100):
-        super().__init__(message, code)
+    def __init__(
+            self, 
+            field: Optional[str], 
+            message: Optional[str] = None
+        ):
+        self.field = field
+
+        if message is None:
+            message = exccess_size_msg(self.field)
+            
         self.message = message
-        self.code = code
+        super().__init__(message)
         
-exccess_size: Callable[[str], str] = lambda field: f"The field '{field}' exceeds the maximum size"
+exccess_size_msg: Callable[[str], str] = \
+    lambda field: f"The field '{field}' exceeds the maximum size"

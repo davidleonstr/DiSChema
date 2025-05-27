@@ -1,9 +1,18 @@
-from typing import Callable
+from typing import Callable, Optional
 
 class MissingLengthError(Exception):
-    def __init__(self, message: str, code: int = 100):
-        super().__init__(message, code)
+    def __init__(
+            self, 
+            field: Optional[str], 
+            message: Optional[str] = None
+        ):
+        self.field = field
+
+        if message is None:
+            message = missing_length_msg(self.field)
+            
         self.message = message
-        self.code = code
+        super().__init__(message)
         
-missing_length: Callable[[str], str] = lambda field: f"The field '{field}' is below the minimum length"
+missing_length_msg: Callable[[str], str] = \
+    lambda field: f"The field '{field}' is below the minimum length"

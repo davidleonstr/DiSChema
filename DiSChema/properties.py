@@ -1,21 +1,48 @@
+types = {
+    'str': str,
+    'int': int,
+    'float': float,
+    'bool': bool,
+    'dict': dict,
+    'list': list
+}
+
 restrictions = {
     'str': {
-        'excluded_chars': 'excluded_chars',
+        'excluded-chars': 'excluded-chars',
         'equal': 'equal',
-        'max_length': 'max_length',
-        'min_length': 'min_length'
+        'max-length': 'max-length',
+        'min-length': 'min-length',
+        'allowed-equalities': 'allowed-equalities',
+        'excluded-equalities': 'excluded-equalities',
+        'allowed-chars': 'allowed-chars'
     },
     'number': {
         'equal': 'equal',
-        'max_size': 'max_size',
-        'min_size': 'min_size'      
+        'max-size': 'max-size',
+        'min-size': 'min-size',
+        'allowed-equalities': 'allowed-equalities',
+        'excluded-equalities': 'excluded-equalities'
     },
     'bool': {
         'equal': 'equal'
     },
     'list': {
-        'max_length': 'max_length',
-        'min_length': 'min_length',
-        'allowed_types': 'allowed_types'
+        'max-length': 'max-length',
+        'min-length': 'min-length',
+        'allowed-items': 'allowed-items'
+    },
+    'dict': {
+        'max-length': 'max-length',
+        'min-length': 'min-length',
+        'allowed-items': 'allowed-items',
+        'schema': 'schema'
+    },
+    'fields': {
+        'type': 'type',
+        'required': 'required',
+        'raise': 'raise',
+        'try-transformation': 'try-transformation',
+        'default-value': 'default-value'
     }
 }
